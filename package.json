@@ -1,0 +1,41 @@
+{
+  "name": "footballedge-verify",
+  "version": "0.1.0",
+  "description": "Check that a FootballEdge football pick was sealed before kick-off: SHA-256, RFC 3161 timestamps (FreeTSA, DigiCert) and OpenTimestamps (Bitcoin).",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "footballedge-verify": "bin/footballedge-verify.js"
+  },
+  "exports": {
+    ".": "./src/verify.js",
+    "./ots": "./src/ots.js",
+    "./tsr": "./src/tsr.js",
+    "./manifest": "./src/manifest.js"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "lint": "node --check bin/footballedge-verify.js && node --check src/verify.js"
+  },
+  "keywords": [
+    "rfc3161",
+    "timestamp",
+    "opentimestamps",
+    "bitcoin",
+    "sha256",
+    "verification",
+    "football"
+  ],
+  "homepage": "https://footballedge.io/en/results/proof/verify",
+  "dependencies": {},
+  "devDependencies": {}
+}

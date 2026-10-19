@@ -1,0 +1,13 @@
+{
+  "_note": "Bitcoin block headers for the fixture's OpenTimestamps proof, as mempool.space/api answered on 19 Oct 2026.",
+  "972055": {
+    "hash": "000000000000000000000e8193f842a72d52244c2aaf83c25899504487e6375b",
+    "merkle_root": "5d4745cb1b562eb155bca21b51a96d100ded0a67df4d9870e2e73d54caee01aa",
+    "timestamp": 1792357751
+  },
+  "972057": {
+    "hash": "00000000000000000001baf3ecbf436b9575580b3acaf27c4e003584c183f5dd",
+    "merkle_root": "e581589558fd7c20df61daa4bff5ce6d9335ec9fb11f0c83957c1d8e509d6a05",
+    "timestamp": 1792358696
+  }
+}
