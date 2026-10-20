@@ -36,31 +36,47 @@ npx footballedge-verify 6ad532063ef1a0ab2563849f --dir ./batch
 
 From a clone instead of npm: `node bin/footballedge-verify.js <batch>`.
 
-Output for the example batch:
+Output of a real run (batch `6ad6595765497923a6ea0c47`, kick-off 19 October 2026 18:00 UTC,
+checked on 20 October 2026):
 
 ```
+$ npx footballedge-verify 6ad6595765497923a6ea0c47
 footballedge-verify 0.1.0
 
-Batch      6ad532063ef1a0ab2563849f
-Kick-off   2026-10-18 21:00 UTC
-File       footballedge-picks-20261018T2100Z-3149562304db.json (2822 bytes)
-SHA-256    3149562304dbff907bb89ebb52f0c03561871e95fd4adf729b6b4a880baf2bd1
+Batch      6ad6595765497923a6ea0c47
+Kick-off   2026-10-19 18:00 UTC
+File       footballedge-picks-20261019T1800Z-63bbc91962c5.json (2692 bytes)
+SHA-256    63bbc91962c5b4de36929ae12eb4998054c0aa17c60b747e2a965f5f126418ab
 
-PASS  Fingerprint         SHA-256 of the file is 3149…2bd1, the published fingerprint.
-PASS  Batch file          Canonical footballedge-pick-manifest/1: 6 calls (2 picks, 4 no pick), kick-off 2026-10-18 21:00:00 UTC.
-PASS  FreeTSA timestamp   Signs this fingerprint at 2026-10-18 20:54:30 UTC, 5 min 30 s before kick-off.
-PASS  FreeTSA signature   openssl ts -verify: OK (FreeTSA root certificate, SHA-256 a6379e7c…aabc).
-PASS  DigiCert timestamp  Signs this fingerprint at 2026-10-18 20:54:30 UTC, 5 min 30 s before kick-off.
+PASS  Fingerprint         SHA-256 of the file is 63bbc91962c5b4de36929ae12eb4998054c0aa17c60b747e2a965f5f126418ab, the published fingerprint.
+PASS  Batch file          Canonical footballedge-pick-manifest/1: 6 calls (2 picks, 4 no pick), kick-off 2026-10-19 18:00:00 UTC.
+PASS  FreeTSA timestamp   Signs this fingerprint at 2026-10-19 17:54:31 UTC, 5 min 29 s before kick-off.
+PASS  FreeTSA signature   openssl ts -verify: OK (FreeTSA root certificate, SHA-256 a6379e7cecc05faa3cbf076013d745e327bbbaa38c0b9af22469d4701d18aabc).
+PASS  DigiCert timestamp  Signs this fingerprint at 2026-10-19 17:54:31 UTC, 5 min 29 s before kick-off.
 PASS  DigiCert signature  openssl ts -verify: OK (trusted roots from /etc/ssl/certs/ca-certificates.crt).
-PASS  Bitcoin anchor      This fingerprint is committed in Bitcoin block 972055, mined 2026-10-18 21:09:11 UTC (merkle root checked against mempool.space).
+PASS  Bitcoin anchor      This fingerprint is committed in Bitcoin block 972191, mined 2026-10-19 18:25:47 UTC (merkle root checked against mempool.space).
 SKIP  ots verify          The OpenTimestamps client is not installed (pip install opentimestamps-client), or drop the .ots file on opentimestamps.org.
 
 Calls sealed in this batch
-  no pick  Estudiantes L.P. v San Lorenzo · 1X2: home win (49%)
-  pick     Estudiantes L.P. v San Lorenzo · Over/Under 2.5: under 2.5 (71%)
-  …
+  no pick  FC Voluntari v FCSB · 1X2: away win (53%)
+           https://footballedge.io/en/matches/fc-voluntari-vs-fcsb-2026-10-19
+  no pick  FC Voluntari v FCSB · Over/Under 2.5: over 2.5 (65%)
+           https://footballedge.io/en/matches/fc-voluntari-vs-fcsb-2026-10-19
+  no pick  Al Shabab v Al-Faisaly FC · 1X2: home win (54%)
+           https://footballedge.io/en/matches/al-shabab-vs-al-faisaly-fc-2026-10-19
+  no pick  Al Shabab v Al-Faisaly FC · Over/Under 2.5: over 2.5 (59%)
+           https://footballedge.io/en/matches/al-shabab-vs-al-faisaly-fc-2026-10-19
+  pick     Al-Hilal Saudi FC v Al-Hazm · 1X2: home win (83%)
+           https://footballedge.io/en/matches/al-hilal-saudi-fc-vs-al-hazm-2026-10-19
+  pick     Al-Hilal Saudi FC v Al-Hazm · Over/Under 2.5: over 2.5 (73%)
+           https://footballedge.io/en/matches/al-hilal-saudi-fc-vs-al-hazm-2026-10-19
+  Each pick must appear with the same call and percentage on the match page and the track record.
 
-Result: PASS — This batch file existed, exactly as it is, before kick-off at 2026-10-18 21:00:00 UTC.
+Batch page:    https://footballedge.io/en/results/proof/6ad6595765497923a6ea0c47
+Track record:  https://footballedge.io/en/results
+
+Result: PASS — This batch file existed, exactly as it is, before kick-off at 2026-10-19 18:00:00 UTC.
+What this shows: the file existed unchanged at the signed time. What it does not show: how the picks are made, or whether they will win.
 ```
 
 Exit code: `0` pass, `1` a check failed, `2` usage error, `3` not enough could be checked (for
@@ -130,6 +146,18 @@ the [track record](https://footballedge.io/en/results).
 FootballEdge is for adults (18+). Predictions are statistical estimates, never a promise of a
 result. If betting stops being fun, free help is at [GamCare](https://www.gamcare.org.uk) (UK),
 [ncpgambling.org](https://www.ncpgambling.org) (US) or a service in your country.
+
+## Troubleshooting
+
+- **"Could not reach https://api.footballedge.io (fetch failed)"** behind a corporate proxy: Node's
+  `fetch` ignores `HTTPS_PROXY` unless you ask it to. On Node 24 run
+  `NODE_USE_ENV_PROXY=1 npx footballedge-verify …`; on older versions download the four files with
+  `curl` (see "By hand") and run `npx footballedge-verify ./<file>.json --offline --sha256 <fingerprint>`.
+- **"SKIP FreeTSA signature"**: `openssl` is not installed or not on your `PATH`. The token's contents
+  are still checked; install OpenSSL (it ships with macOS and most Linux distributions; on Windows
+  use Git Bash or WSL) to check the signature too.
+- **"PENDING Bitcoin anchor"**: the batch was sealed in the last few hours and its Bitcoin block is
+  not mined yet. Run the tool again later.
 
 ## Development
 

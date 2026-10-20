@@ -3,6 +3,14 @@
   "version": "0.1.0",
   "description": "Check that a FootballEdge football pick was sealed before kick-off: SHA-256, RFC 3161 timestamps (FreeTSA, DigiCert) and OpenTimestamps (Bitcoin).",
   "license": "MIT",
+  "author": "FootballEdge (https://footballedge.io)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/footballedge/footballedge-verify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/footballedge/footballedge-verify/issues"
+  },
   "type": "module",
   "bin": {
     "footballedge-verify": "bin/footballedge-verify.js"
@@ -17,14 +25,15 @@
     "bin",
     "src",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "engines": {
     "node": ">=20"
   },
   "scripts": {
     "test": "node --test test/*.test.js",
-    "lint": "node --check bin/footballedge-verify.js && node --check src/verify.js"
+    "lint": "node --check bin/footballedge-verify.js && for f in src/*.js; do node --check \"$f\"; done"
   },
   "keywords": [
     "rfc3161",
@@ -35,7 +44,5 @@
     "verification",
     "football"
   ],
-  "homepage": "https://footballedge.io/en/results/proof/verify",
-  "dependencies": {},
-  "devDependencies": {}
+  "homepage": "https://footballedge.io/en/results/proof/verify"
 }
