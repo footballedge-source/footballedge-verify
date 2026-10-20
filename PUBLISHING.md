@@ -8,7 +8,7 @@ yet. About 15 minutes.
 
 1. On GitHub: **New repository** → owner `footballedge` (or the account you want) → name
    `footballedge-verify` → **Public** → no README, no licence, no .gitignore (they are already here).
-2. If the owner or name differs from `footballedge/footballedge-verify`, change `repository.url`
+2. If the owner or name differs from `footballedge-source/footballedge-verify`, change `repository.url`
    and `bugs.url` in `package.json` first and commit that in the monorepo.
 
 ## 2. Push this folder, with its history, from the monorepo
@@ -17,7 +17,7 @@ From the monorepo root, on an up-to-date `main`:
 
 ```bash
 git subtree split --prefix=tools/verify-pick -b verify-pick-release
-git push git@github.com:footballedge/footballedge-verify.git verify-pick-release:main
+git push git@github.com:footballedge-source/footballedge-verify.git verify-pick-release:main
 git branch -D verify-pick-release
 ```
 
@@ -34,7 +34,7 @@ kick-off") and the website `https://footballedge.io/en/results/proof/verify`.
 
 ## 3. Show it on the site
 
-Set `NEXT_PUBLIC_VERIFIER_REPO_URL=https://github.com/footballedge/footballedge-verify` in Vercel
+Set `NEXT_PUBLIC_VERIFIER_REPO_URL=https://github.com/footballedge-source/footballedge-verify` in Vercel
 (production) and redeploy. Until it is set, `/results/proof/verify` hides the "One command for all
 of it" section, so the page never links to something that does not exist.
 

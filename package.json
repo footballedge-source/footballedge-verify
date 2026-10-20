@@ -6,10 +6,10 @@
   "author": "FootballEdge (https://footballedge.io)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/footballedge/footballedge-verify.git"
+    "url": "git+https://github.com/footballedge-source/footballedge-verify.git"
   },
   "bugs": {
-    "url": "https://github.com/footballedge/footballedge-verify/issues"
+    "url": "https://github.com/footballedge-source/footballedge-verify/issues"
   },
   "type": "module",
   "bin": {
